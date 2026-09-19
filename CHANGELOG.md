@@ -10,6 +10,7 @@ This first preview has not been published. When released, all three packages wil
 - Add `swagger-ui-monaco-dist`, built from the pinned `swagger-ui-dist` 5.32.15 npm dependency and bundled with Monaco Editor 0.56.0.
 - Add `swagger-ui-monaco-express`, which composes the enhanced distribution with the `swagger-ui-express` 5.0.1 API.
 - Support OpenAPI 3.0.x and 3.1.x schema projection, document-local references, and direction-aware handling of `readOnly` and `writeOnly` properties.
+- Avoid overlapping regular-expression alternatives when parsing quoted media-type parameters.
 - Add clean-consumer package verification, preserved release artifacts, release metadata validation, and GitHub Actions trusted publishing.
 
 The synchronized stable `0.1.0` release will use the npm `latest` tag after the preview is installed and smoke-tested from the registry.

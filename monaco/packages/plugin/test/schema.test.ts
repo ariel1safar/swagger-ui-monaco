@@ -39,11 +39,17 @@ describe('JSON media types and response selection', () => {
   it('uses a parameterized response media type only when its parameters match', () => {
     const document = { paths: { '/x': { get: { responses: { '200': { content: {
       'application/json; profile=v1': { schema: { const: 'profile' } },
+      'application/json; profile="v1;stable"': { schema: { const: 'quoted-semicolon' } },
+      'application/json; profile="v1\\"quoted\\\\path"': { schema: { const: 'escaped' } },
+      'application/json; charset=UTF-8': { schema: { const: 'charset' } },
       'application/json': { schema: { const: 'generic' } },
     } } } } } } };
     expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json')).toEqual({ const: 'generic' });
     expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json; profile=v1')).toEqual({ const: 'profile' });
     expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json; profile=v2')).toEqual({ const: 'generic' });
+    expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json; profile="v1;stable"')).toEqual({ const: 'quoted-semicolon' });
+    expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json; profile="v1\\"quoted\\\\path"')).toEqual({ const: 'escaped' });
+    expect(selectResponseSchema(document, '/x', 'get', 200, 'application/json; charset=utf-8')).toEqual({ const: 'charset' });
   });
 });
 

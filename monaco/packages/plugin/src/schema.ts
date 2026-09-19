@@ -10,7 +10,7 @@ function mediaType(value = ''): string {
 
 function mediaParameters(value: string): Map<string, string> {
   const parameters = new Map<string, string>();
-  for (const match of value.matchAll(/;\s*([^=;\s]+)\s*=\s*("(?:\\.|[^"])*"|[^;]*)/g)) {
+  for (const match of value.matchAll(/;\s*([^=;\s]+)\s*=\s*("(?:\\.|[^"\\])*"|[^;]*)/g)) {
     const name = match[1].toLowerCase();
     const raw = match[2].trim().replace(/^"|"$/g, '').replace(/\\(.)/g, '$1');
     parameters.set(name, name === 'charset' ? raw.toLowerCase() : raw);
