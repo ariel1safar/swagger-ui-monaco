@@ -1,0 +1,17 @@
+{
+  "name": "swagger-ui-monaco",
+  "version": "0.1.0",
+  "description": "Schema-aware Monaco request editors and response viewers for Swagger UI",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs"},
+    "./assets/*": "./dist/assets/*"
+  },
+  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
+  "sideEffects": ["**/*.css"],
+  "license": "Apache-2.0",
+  "publishConfig": {"access": "public"}
+}

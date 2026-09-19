@@ -1,0 +1,36 @@
+{
+  "name": "swagger-ui-monaco-express",
+  "version": "0.1.0",
+  "description": "Express middleware for Swagger UI with Monaco request editors",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "dependencies": {
+    "swagger-ui-express": "5.0.1",
+    "swagger-ui-monaco-dist": "0.1.0",
+    "@types/swagger-ui-express": "4.1.8"
+  },
+  "peerDependencies": {
+    "express": "^4.21.2 || ^5.0.0"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.14.0
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:packages
+      - run: npm pack --workspaces --dry-run

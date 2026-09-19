@@ -1,0 +1,94 @@
+name: Release packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Existing package version to publish, without a v prefix
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Verify release metadata
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { readFileSync } from 'node:fs';
+
+          const version = process.env.RELEASE_VERSION;
+          assert.match(version, /^[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?$/, 'version must be a semver release without a v prefix');
+          assert.equal(process.env.GITHUB_REF, `refs/tags/v${version}`, 'run the workflow from the matching v<version> tag');
+          assert.equal(
+            execFileSync('git', ['rev-list', '-n', '1', `v${version}`], { encoding: 'utf8' }).trim(),
+            process.env.GITHUB_SHA,
+            'release tag must point at the checked-out commit',
+          );
+
+          const manifestPaths = [
+            'package.json',
+            'packages/plugin/package.json',
+            'packages/dist/package.json',
+            'packages/express/package.json',
+          ];
+          const expectedRepository = `https://github.com/${process.env.GITHUB_REPOSITORY}.git`;
+          for (const path of manifestPaths) {
+            const manifest = JSON.parse(readFileSync(path, 'utf8'));
+            assert.equal(manifest.version, version, `${path} version must equal ${version}`);
+            const repository = typeof manifest.repository === 'string' ? manifest.repository : manifest.repository?.url;
+            assert(repository, `${path} must contain the real public repository.url before release`);
+            const normalized = repository.replace(/^git\+/, '').replace(/\/$/, '');
+            assert(
+              normalized === expectedRepository || normalized === expectedRepository.slice(0, -4),
+              `${path} repository.url must match ${expectedRepository}`,
+            );
+          }
+
+          const expressManifest = JSON.parse(readFileSync('packages/express/package.json', 'utf8'));
+          assert.equal(
+            expressManifest.dependencies['swagger-ui-monaco-dist'],
+            version,
+            'Express integration must depend on the exact distribution version',
+          );
+
+          const npmVersion = execFileSync('npm', ['--version'], { encoding: 'utf8' }).trim().split('.').map(Number);
+          assert(
+            npmVersion[0] > 11 || (npmVersion[0] === 11 && (npmVersion[1] > 5 || (npmVersion[1] === 5 && npmVersion[2] >= 1))),
+            'npm 11.5.1 or newer is required for trusted publishing',
+          );
+          NODE
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:packages
+      - run: npm pack --workspaces --dry-run
+      - name: Publish browser plugin
+        run: npm publish ./packages/plugin --access public --provenance
+      - name: Publish self-hosted distribution
+        run: npm publish ./packages/dist --access public --provenance
+      - name: Publish Express integration
+        run: npm publish ./packages/express --access public --provenance

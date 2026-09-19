@@ -10,6 +10,17 @@
 ![monthly packagist installs](https://img.shields.io/packagist/dm/swagger-api/swagger-ui.svg?label=packagist%20installs)
 [![gzip size](https://img.shields.io/bundlephobia/minzip/swagger-ui.svg?label=gzip%20size)](https://bundlephobia.com/package/swagger-ui)
 
+## Monaco editor support
+
+This fork preserves Swagger UI's upstream source and history. The standalone
+[Monaco workspace](monaco/README.md) adds schema-aware JSON request editors,
+object parameter editors, and response viewers through Swagger UI's plugin API.
+It includes browser, self-hosted distribution, and Express integration packages.
+
+To build the Monaco packages, run `cd monaco`, `npm ci`, and `npm run build`.
+The workspace bundles its pinned npm version of Swagger UI; it does not replace
+the root build or automatically enable Monaco in the upstream presets.
+
 ## Introduction
 [Swagger UI](https://swagger.io/tools/swagger-ui/) allows anyone — be it your development team or your end consumers — to visualize and interact with the API’s resources without having any of the implementation logic in place. It’s automatically generated from your OpenAPI (formerly known as Swagger) Specification, with the visual documentation making it easy for back end implementation and client side consumption.
 
