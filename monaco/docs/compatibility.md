@@ -1,5 +1,7 @@
 # Compatibility and schema behavior
 
+This guide describes the upcoming `0.1.0-beta.1` preview. The preview has not been published yet. Swagger UI Monaco is an independent fork and is not an official Swagger UI release.
+
 ## Supported inputs
 
 The plugin activates for OpenAPI `3.0.x` and `3.1.x` documents and JSON media types: `application/json` and structured suffixes such as `application/problem+json`. It does not add YAML editing, Swagger/OpenAPI 2.0 support, multipart editing, or editors for arbitrary text and binary bodies.
@@ -38,7 +40,7 @@ The plain textarea is shown while Monaco starts and remains if the runtime, CSS,
 
 ## Supported package/runtime versions
 
-Version 0.1.0 is built and tested with:
+Version `0.1.0-beta.1` is built and tested with:
 
 - Node.js 22.14 or newer for the Node helpers, build, package verification, and Express integration
 - Swagger UI distribution 5.32.15 in `swagger-ui-monaco-dist`
@@ -46,4 +48,4 @@ Version 0.1.0 is built and tested with:
 - `swagger-ui-express` 5.0.1 in `swagger-ui-monaco-express`
 - Express 5.2.1 with the full browser suite, plus Express 4.21.2 middleware and static-asset smoke tests
 
-Other Swagger UI versions can consume the browser plugin, but its integration points are internal component names rather than a versioned Swagger UI plugin contract. Test the exact Swagger UI version used by the application.
+Other Swagger UI versions may consume the browser plugin, but its integration points are internal component names rather than a versioned Swagger UI plugin contract. Test the exact Swagger UI version used by the application. The distribution and Express packages use the pinned versions above and are not built from the Swagger UI source at the repository root.

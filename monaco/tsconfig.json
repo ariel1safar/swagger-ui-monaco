@@ -8,9 +8,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "types": ["node"],
     "baseUrl": ".",
     "paths": { "swagger-ui-monaco-dist": ["packages/dist/src/index.ts"] }
   },
-  "include": ["packages/**/*.ts", "tests/**/*.ts", "*.config.ts"]
+  "include": ["packages/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts", "*.config.ts"]
 }

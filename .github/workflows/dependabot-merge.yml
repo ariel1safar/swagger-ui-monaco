@@ -10,7 +10,7 @@ permissions:
 jobs:
   merge-me:
     name: Merge me!
-    if: github.actor == 'dependabot[bot]'
+    if: github.repository == 'swagger-api/swagger-ui' && github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       # This first step will fail if there's no metadata and so the approval

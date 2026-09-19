@@ -1,51 +1,49 @@
-# Swagger UI Monaco
+# Swagger UI Monaco packages
 
-Schema-aware Monaco editors for JSON request bodies, object parameters, and JSON responses in Swagger UI.
+Schema-aware Monaco editors for JSON request bodies and object parameters, plus a read-only JSON response viewer for Swagger UI.
 
-This standalone workspace lives under `monaco/` in the
-[`ariel1safar/swagger-ui-monaco`](https://github.com/ariel1safar/swagger-ui-monaco)
-fork. Run the development commands below from this directory. Its distribution
-build uses the pinned `swagger-ui-dist` npm dependency, not the upstream source
-at the repository root.
+This workspace belongs to the independent [`ariel1safar/swagger-ui-monaco`](https://github.com/ariel1safar/swagger-ui-monaco) fork. It is not affiliated with or endorsed by SmartBear Software or the Swagger UI maintainers. Its distribution is built from the pinned `swagger-ui-dist` 5.32.15 npm dependency and Monaco Editor 0.56.0, not from the Swagger UI source at the repository root.
 
-The files in this workspace's `.github/workflows/` are retained from the original
-standalone project as reference. GitHub does not run nested workflow files;
-Monaco CI and publishing are not configured for this fork.
+## Publication status
 
-This repository publishes three packages:
+The three packages are preparing their first synchronized preview, `0.1.0-beta.1`. The preview has not been published yet. When available, it will use the npm `next` tag. A later synchronized `0.1.0` release will use `latest` after registry installation smoke tests pass.
 
-| Package | Use it when |
+| Package | Purpose |
 | --- | --- |
-| `swagger-ui-monaco` | You already create Swagger UI in the browser and can host the Monaco runtime assets. |
-| `swagger-ui-monaco-dist` | You want a self-hosted Swagger UI 5.32.15 distribution with the plugin and Monaco 0.56.0 included. |
-| `swagger-ui-monaco-express` | You use `swagger-ui-express` and want a drop-in integration that serves the enhanced distribution first. |
+| [`swagger-ui-monaco`](packages/plugin/README.md) | Plugin for an existing browser Swagger UI setup. |
+| [`swagger-ui-monaco-dist`](packages/dist/README.md) | Complete self-hosted Swagger UI distribution with Monaco assets. |
+| [`swagger-ui-monaco-express`](packages/express/README.md) | Express integration compatible with the `swagger-ui-express` API. |
+
+After the preview is published, install from `next`:
+
+```sh
+npm install swagger-ui-monaco@next
+npm install swagger-ui-monaco-dist@next
+npm install swagger-ui-monaco-express@next express
+```
 
 ## Browser plugin
 
-```sh
-npm install swagger-ui-monaco
-```
-
-Copy `node_modules/swagger-ui-monaco/dist/assets/` to a browser-accessible directory, then configure that directory explicitly:
+Copy `node_modules/swagger-ui-monaco/dist/assets/` to a browser-accessible directory, keeping every emitted chunk, stylesheet, font, and worker together. Then configure that directory explicitly:
 
 ```js
 import { createMonacoPlugin } from 'swagger-ui-monaco';
 
 SwaggerUIBundle({
   url: '/openapi.json',
-  plugins: [createMonacoPlugin({ assetBaseUrl: '/docs/monaco/' })],
+  plugins: [
+    createMonacoPlugin({
+      assetBaseUrl: '/docs/monaco/',
+      theme: 'auto',
+      validateResponses: true,
+    }),
+  ],
 });
 ```
 
-When `assetBaseUrl` is omitted, the plugin resolves `./monaco/` relative to the document URL. The directory must contain `monaco-runtime.js`, `monaco-runtime.css`, their emitted chunks and styles, and the JSON and editor workers. Keep all of those files together and serve them from the browser; no CDN or runtime package download is used.
+When `assetBaseUrl` is omitted, the plugin resolves `./monaco/` relative to the document URL. Runtime assets and schemas are self-hosted; the plugin does not fetch them from a CDN.
 
 ## Self-hosted distribution
-
-```sh
-npm install swagger-ui-monaco-dist
-```
-
-The assets directory contains Swagger UI 5.32.15, the plugin, and Monaco 0.56.0. The enhanced `swagger-ui-bundle.js` finds Monaco assets relative to its own script URL, so it also works when the page and assets are mounted at different paths.
 
 ```js
 import express from 'express';
@@ -55,77 +53,69 @@ const app = express();
 app.use('/docs', express.static(getAbsoluteFSPath()));
 ```
 
-`absolutePath` is an alias of `getAbsoluteFSPath`. The default export and the `swagger-ui-monaco-dist/absolute-path` subpath provide the same helper.
+`absolutePath` is an alias of `getAbsoluteFSPath`. The default export and the `swagger-ui-monaco-dist/absolute-path` subpath provide the same helper. The enhanced `swagger-ui-bundle.js` resolves Monaco assets relative to its own script URL.
 
 ## Express integration
-
-```sh
-npm install swagger-ui-monaco-express express
-```
 
 ```js
 import express from 'express';
 import swaggerUi from 'swagger-ui-monaco-express';
 
 const app = express();
-const document = { openapi: '3.1.0', info: { title: 'Example', version: '1' }, paths: {} };
+const document = {
+  openapi: '3.1.0',
+  info: { title: 'Example', version: '1.0.0' },
+  paths: {},
+};
 const options = {
   swaggerOptions: {
     monaco: { theme: 'auto', validateResponses: true },
   },
 };
 
-app.use('/api-docs', swaggerUi.serveFiles(document, options), swaggerUi.setup(document, options));
+app.use(
+  '/api-docs',
+  swaggerUi.serveFiles(document, options),
+  swaggerUi.setup(document, options),
+);
 ```
 
-The package exports `setup`, `serve`, `serveFiles`, `serveWithOptions`, and `generateHTML` with the upstream `swagger-ui-express` 5.0.1 calling conventions. Its static middleware serves the enhanced assets before the upstream assets.
+The package exports `setup`, `serve`, `serveFiles`, `serveWithOptions`, and `generateHTML` with the `swagger-ui-express` 5.0.1 calling conventions. Its middleware serves the enhanced assets before upstream assets.
 
 ## Options
 
-Pass options to `createMonacoPlugin(options)`, or use `swaggerOptions.monaco` with the distribution and Express integration. Runtime Swagger UI configuration overrides the options used to create the plugin.
+Pass options to `createMonacoPlugin(options)`, or use `swaggerOptions.monaco` with the distribution and Express integration. Runtime Swagger UI configuration overrides options used when creating the plugin.
 
 | Option | Default | Effect |
 | --- | --- | --- |
-| `enabled` | `true` | Enables all compatible Monaco surfaces. |
+| `enabled` | `true` | Enables compatible Monaco surfaces. |
 | `requestEditor` | `true` | Replaces compatible JSON request-body editors. |
 | `objectParameters` | `true` | Replaces JSON object parameter editors. |
 | `responseViewer` | `true` | Replaces compatible JSON response bodies. |
 | `validateResponses` | `false` | Enables schema diagnostics in the read-only response viewer. |
 | `theme` | `auto` | Uses `light`, `dark`, or the browser color-scheme preference. |
-| `assetBaseUrl` | `./monaco/` | Selects the self-hosted Monaco asset directory. Include a trailing slash for clarity. |
+| `assetBaseUrl` | `./monaco/` | Selects the self-hosted Monaco asset directory. |
 
-Request changes are sent to Swagger UI immediately, including an intentionally empty body. Response formatting is display-only: **Show raw**, **Copy raw**, and **Download** preserve the exact response text received from Swagger UI. Non-JSON media types, attachments, and unsupported OpenAPI versions keep their original Swagger UI components. If the runtime, stylesheet, or worker cannot load, an editable or read-only plain textarea remains available.
+Request changes are sent to Swagger UI immediately, including an intentionally empty body. Response formatting is display-only: **Show raw**, **Copy raw**, and **Download** preserve the exact response text received from Swagger UI. Unsupported content keeps the original Swagger UI component. If the runtime, stylesheet, or a worker cannot load, a plain textarea remains available.
 
-See [compatibility and schema limitations](docs/compatibility.md) before relying on editor diagnostics as validation.
+See [compatibility and schema behavior](docs/compatibility.md) for supported OpenAPI versions, JSON Schema limits, CSP requirements, and tested runtimes.
 
 ## Development
 
-Node.js 22.14 or newer is required.
+Node.js 22.14 or newer is required. Run commands from this directory:
 
 ```sh
 npm ci
+npx playwright install --with-deps chromium
 npm run build
 npm test
 npm run typecheck
 npm run lint
-npx playwright install --with-deps chromium
 npm run test:packages
 ```
 
-`npm run test:packages` packs each workspace, installs the tarballs in an isolated consumer, checks exports and declarations, serves the installed assets, and runs the browser suite with `PACKAGE_FIXTURE_ROOT` pointed at that consumer. It deletes only the unique temporary directory it created.
-
-## Release setup
-
-No release workflow can publish until repository and npm ownership are configured:
-
-1. Add the real public Git repository URL as `repository.url` in the root and all three package manifests. The release workflow requires it to match the current GitHub repository exactly.
-2. Confirm that the unscoped names `swagger-ui-monaco`, `swagger-ui-monaco-dist`, and `swagger-ui-monaco-express` are available and that the publishing account owns them. Package names and ownership are not established by this repository.
-3. Bootstrap each new package once under the intended npm owner. Use an interactive, short-lived authentication method and publish in dependency order: plugin, distribution, Express integration. Do not store a publish token in the repository.
-4. For each package on npmjs.com, configure GitHub Actions as a trusted publisher for this repository and the workflow filename `release.yml`, with direct `npm publish` allowed. Trusted publishing requires a GitHub-hosted runner and npm 11.5.1 or newer; the workflow uses Node 24 and grants only `contents: read` and `id-token: write`.
-5. Create and push a signed or annotated `v<version>` tag at the reviewed commit. Run the manual **Release packages** workflow from that tag and enter the same version.
-
-The release workflow rebuilds and repeats all verification before publishing in dependency order. It does not use an npm token. It rejects mismatched package versions, dependency versions, tags, or repository metadata before any publish command runs.
+`npm run test:packages` verifies packed files, exports, type declarations, static assets, Express 4 and 5 compatibility, and the browser suite from an isolated installed consumer. See the repository [contribution guide](../CONTRIBUTING.md) and the maintainer [release guide](docs/releasing.md).
 
 ## License
 
-The project is licensed under Apache License 2.0. Bundled and dependent third-party notices are recorded in `NOTICE` and the package-specific notice files.
+The project is licensed under the [Apache License 2.0](../LICENSE). Upstream and bundled third-party notices are recorded in [`../NOTICE`](../NOTICE) and the package-specific notice files.

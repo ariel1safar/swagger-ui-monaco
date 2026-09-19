@@ -1,73 +1,49 @@
 ---
 name: Bug report
-about: Report an issue you're experiencing
-
+about: Report reproducible incorrect behavior in Swagger UI Monaco
 ---
 
-<!---
-  Thanks for filing a bug report! 😄
-
-  Before you submit, please read the following:
-
-  If you're here to report a security issue, please STOP writing an issue and
-  contact us at security@swagger.io instead!
-
-  Search open/closed issues before submitting!
-
-  Issues on GitHub are only related to problems of Swagger-UI itself. We'll try
-  to offer support here for your use case, but we can't offer help with projects
-  that use Swagger-UI indirectly, like Springfox or swagger-node.
-
-  Likewise, we can't accept bugs in the Swagger/OpenAPI specifications
-  themselves, or anything that violates the specifications.
--->
-
-### Q&A (please complete the following information)
- - OS: [e.g. macOS]
- - Browser: [e.g. chrome, safari]
- - Version: [e.g. 22]
- - Method of installation: [e.g. npm, dist assets]
- - Swagger-UI version: [e.g. 3.10.0]
- - Swagger/OpenAPI version: [e.g. Swagger 2.0, OpenAPI 3.0]
-
-### Content & configuration
 <!--
-  Provide us with a way to see what you're seeing,
-  so that we can fix your issue.
+Search existing issues first. For a suspected vulnerability, stop and report it privately at:
+https://github.com/ariel1safar/swagger-ui-monaco/security/advisories/new
 -->
 
-Example Swagger/OpenAPI definition:
+## Environment
+
+- Package: <!-- swagger-ui-monaco, swagger-ui-monaco-dist, or swagger-ui-monaco-express -->
+- Package version: <!-- exact version; for example, 0.1.0-beta.1 -->
+- Installation method: <!-- npm tag/version, tarball, source checkout -->
+- Browser and version: <!-- or "not applicable" -->
+- Node.js and Express versions: <!-- or "not applicable" -->
+- Operating system:
+- OpenAPI version: <!-- 3.0.x or 3.1.x -->
+
+## Minimal reproduction
+
+<!-- Link a minimal repository or provide the smallest self-contained code and OpenAPI document that reproduce the issue. Remove credentials, tokens, and private API data. -->
+
 ```yaml
-# your YAML here
+# Minimal OpenAPI document
 ```
 
-Swagger-UI configuration options:
 ```js
-SwaggerUI({
-  // your config options here
-})
+// Minimal Swagger UI or Express setup
 ```
 
-```
-?yourQueryStringConfig
-```
+## Steps to reproduce
 
-### Describe the bug you're encountering
-<!-- A clear and concise description of what the bug is. -->
+1.
+2.
+3.
 
-### To reproduce...
+## Expected behavior
 
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+<!-- What should happen? -->
 
-### Expected behavior
-<!-- A clear and concise description of what you expected to happen. -->
+## Actual behavior
 
-### Screenshots
-<!-- If applicable, add screenshots to help explain your problem. -->
+<!-- What happens instead? Include exact errors and relevant console output. -->
 
-### Additional context or thoughts
-<!-- Add any other context about the problem here. -->
+## Tests and checks tried
+
+<!-- List commands, browsers, runtimes, or workarounds already tried. -->

@@ -1,7 +1,16 @@
 {
   "name": "swagger-ui-monaco-express",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "description": "Express middleware for Swagger UI with Monaco request editors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariel1safar/swagger-ui-monaco.git",
+    "directory": "monaco/packages/express"
+  },
+  "homepage": "https://github.com/ariel1safar/swagger-ui-monaco/tree/main/monaco/packages/express#readme",
+  "bugs": {"url": "https://github.com/ariel1safar/swagger-ui-monaco/issues"},
+  "keywords": ["swagger-ui", "monaco-editor", "openapi", "express", "middleware"],
+  "scripts": {"prepack": "node --experimental-strip-types ../../scripts/check-package.ts"},
   "type": "module",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +29,7 @@
   ],
   "dependencies": {
     "swagger-ui-express": "5.0.1",
-    "swagger-ui-monaco-dist": "0.1.0",
+    "swagger-ui-monaco-dist": "0.1.0-beta.1",
     "@types/swagger-ui-express": "4.1.8"
   },
   "peerDependencies": {
@@ -31,6 +40,7 @@
   },
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
