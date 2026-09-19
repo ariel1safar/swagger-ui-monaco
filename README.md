@@ -25,6 +25,38 @@ npm install swagger-ui-monaco-dist@next
 npm install swagger-ui-monaco-express@next express
 ```
 
+### Existing wrappers, including NestJS
+
+If your framework serves Swagger UI through `swagger-ui-dist`, you can replace that dependency with `swagger-ui-monaco-dist` while keeping your framework integration. For NestJS, keep your existing `@nestjs/swagger` imports and `SwaggerModule.setup(...)` call.
+
+After `0.1.0-beta.1` is published, choose the configuration for your package manager and add it to your application's root `package.json`:
+
+**npm overrides**
+
+```json
+{
+  "overrides": {
+    "@nestjs/swagger": {
+      "swagger-ui-dist": "npm:swagger-ui-monaco-dist@0.1.0-beta.1"
+    }
+  }
+}
+```
+
+**Yarn resolutions**
+
+```json
+{
+  "resolutions": {
+    "@nestjs/swagger/swagger-ui-dist": "npm:swagger-ui-monaco-dist@0.1.0-beta.1"
+  }
+}
+```
+
+Run `npm install` or `yarn install`, commit the updated lockfile, then restart your app and check the docs page. These examples assume `swagger-ui-dist` is a transitive dependency; Yarn should use a `node_modules` installation. The override selects the bundled Swagger UI 5.32.15, so verify your wrapper against that version.
+
+See the [wrapper integration guide](monaco/docs/wrappers.md) for pnpm, asset verification, compatibility limits, and NestJS's `customSwaggerUiPath` alternative.
+
 ### Browser plugin
 
 ```js

@@ -22,6 +22,22 @@ npm install swagger-ui-monaco-dist@next
 npm install swagger-ui-monaco-express@next express
 ```
 
+## Existing framework wrappers
+
+For NestJS or another wrapper that serves `swagger-ui-dist`, use a package-manager override to replace that asset dependency with `swagger-ui-monaco-dist`. Your existing `@nestjs/swagger` imports and `SwaggerModule.setup(...)` call can stay unchanged. After the preview is published, add this to your application's root `package.json` and run `npm install`:
+
+```json
+{
+  "overrides": {
+    "@nestjs/swagger": {
+      "swagger-ui-dist": "npm:swagger-ui-monaco-dist@0.1.0-beta.1"
+    }
+  }
+}
+```
+
+Commit the updated lockfile and verify the served assets. See [Using existing wrappers](docs/wrappers.md) for Yarn resolutions, pnpm overrides, compatibility limits, and the optional NestJS custom asset path.
+
 ## Browser plugin
 
 Copy `node_modules/swagger-ui-monaco/dist/assets/` to a browser-accessible directory, keeping every emitted chunk, stylesheet, font, and worker together. Then configure that directory explicitly:
@@ -53,7 +69,7 @@ const app = express();
 app.use('/docs', express.static(getAbsoluteFSPath()));
 ```
 
-`absolutePath` is an alias of `getAbsoluteFSPath`. The default export and the `swagger-ui-monaco-dist/absolute-path` subpath provide the same helper. The enhanced `swagger-ui-bundle.js` resolves Monaco assets relative to its own script URL.
+`absolutePath` is an alias of `getAbsoluteFSPath`. The default export and the `swagger-ui-monaco-dist/absolute-path` and `swagger-ui-monaco-dist/absolute-path.js` subpaths provide the same helper. The enhanced `swagger-ui-bundle.js` resolves Monaco assets relative to its own script URL.
 
 ## Express integration
 

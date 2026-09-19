@@ -21,6 +21,10 @@
       "import": {"types": "./dist/absolute-path.d.ts", "default": "./dist/absolute-path.js"},
       "require": {"types": "./dist/absolute-path.d.cts", "default": "./dist/absolute-path.cjs"}
     },
+    "./absolute-path.js": {
+      "import": {"types": "./dist/absolute-path.d.ts", "default": "./dist/absolute-path.js"},
+      "require": {"types": "./dist/absolute-path.d.cts", "default": "./dist/absolute-path.cjs"}
+    },
     "./assets/*": "./dist/assets/*"
   },
   "files": ["dist", "README.md", "LICENSE", "NOTICE"],

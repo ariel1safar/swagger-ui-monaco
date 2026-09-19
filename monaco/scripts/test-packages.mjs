@@ -293,6 +293,8 @@ try {
   assert.equal(distribution.absolutePath, distribution.getAbsoluteFSPath);
   assertInside(await realpath(distribution.getAbsoluteFSPath()), join(consumer, 'node_modules'), 'distribution assets');
   assert.equal(typeof requireFromConsumer('swagger-ui-monaco-dist/absolute-path'), 'function');
+  assert.equal(requireFromConsumer('swagger-ui-monaco-dist/absolute-path.js')(), distribution.getAbsoluteFSPath(),
+    'NestJS-compatible absolute-path.js must resolve the installed assets');
 
   const expressIntegration = requireFromConsumer('swagger-ui-monaco-express');
   for (const name of ['setup', 'serveFiles', 'serveWithOptions', 'generateHTML']) {
@@ -304,9 +306,11 @@ try {
 import { createMonacoPlugin } from 'swagger-ui-monaco';
 import getAssets, { absolutePath, getAbsoluteFSPath } from 'swagger-ui-monaco-dist';
 import absolutePathSubpath from 'swagger-ui-monaco-dist/absolute-path';
+import absolutePathJsSubpath from 'swagger-ui-monaco-dist/absolute-path.js';
 import swagger, { generateHTML, serve, serveFiles, serveWithOptions, setup } from 'swagger-ui-monaco-express';
 if (typeof createMonacoPlugin !== 'function' || typeof getAssets !== 'function' ||
     absolutePath !== getAbsoluteFSPath || typeof absolutePathSubpath !== 'function' ||
+    absolutePathJsSubpath() !== getAbsoluteFSPath() ||
     typeof setup !== 'function' || typeof serveFiles !== 'function' ||
     typeof serveWithOptions !== 'function' || typeof generateHTML !== 'function' ||
     !Array.isArray(serve) || swagger.setup !== setup) process.exit(1);
@@ -317,6 +321,7 @@ if (typeof createMonacoPlugin !== 'function' || typeof getAssets !== 'function' 
 import { createMonacoPlugin, type MonacoOptions } from 'swagger-ui-monaco';
 import getAssets, { absolutePath, getAbsoluteFSPath } from 'swagger-ui-monaco-dist';
 import absolutePathSubpath from 'swagger-ui-monaco-dist/absolute-path';
+import absolutePathJsSubpath from 'swagger-ui-monaco-dist/absolute-path.js';
 import swagger, { generateHTML, serve, serveFiles, serveWithOptions, setup } from 'swagger-ui-monaco-express';
 const options: MonacoOptions = {
   enabled: true,
@@ -328,7 +333,7 @@ const options: MonacoOptions = {
   assetBaseUrl: '/docs/monaco/',
 };
 createMonacoPlugin(options);
-const paths: string[] = [getAssets(), absolutePath(), absolutePathSubpath()];
+const paths: string[] = [getAssets(), absolutePath(), absolutePathSubpath(), absolutePathJsSubpath()];
 void [paths, swagger, generateHTML, serve, serveFiles, serveWithOptions, setup];
 `);
   await writeFile(join(consumer, 'tsconfig.json'), JSON.stringify({
@@ -346,10 +351,12 @@ void [paths, swagger, generateHTML, serve, serveFiles, serveWithOptions, setup];
   await writeFile(join(consumer, 'commonjs.cts'), `
 import getAssets from 'swagger-ui-monaco-dist';
 import absolute = require('swagger-ui-monaco-dist/absolute-path');
+import absoluteJs = require('swagger-ui-monaco-dist/absolute-path.js');
 import swagger = require('swagger-ui-monaco-express');
 import { createMonacoPlugin } from 'swagger-ui-monaco';
 const assets: string = absolute();
-if (getAssets() !== assets || typeof swagger.setup !== 'function' ||
+const assetsJs: string = absoluteJs();
+if (getAssets() !== assets || assetsJs !== assets || typeof swagger.setup !== 'function' ||
     typeof createMonacoPlugin({}) !== 'function') process.exit(1);
 `);
   run(process.execPath, [join(consumer, 'node_modules/typescript/bin/tsc'), '--project', join(consumer, 'tsconfig.json')], { cwd: consumer });
