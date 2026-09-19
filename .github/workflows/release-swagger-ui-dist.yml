@@ -9,7 +9,7 @@ on:
 
 jobs:
   release-swagger-ui-dist:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.repository == 'swagger-api/swagger-ui' && github.event.workflow_run.conclusion == 'success'
     name: Release swagger-ui-dist npm package
     runs-on: ubuntu-latest
     permissions:

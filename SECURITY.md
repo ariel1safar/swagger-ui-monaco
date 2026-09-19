@@ -1,23 +1,21 @@
 # Security Policy
 
-If you believe you've found an exploitable security issue in Swagger UI,
-**please don't create a public issue**. 
-
-
 ## Supported versions
 
-This is the list of versions of `swagger-ui` which are
-currently being supported with security updates.
+Before the first stable release, the latest published preview is the only version eligible for security fixes. After a stable release, the latest stable line will be supported and preview support will be stated here when applicable.
 
-| Version | Supported          | Notes                           |
-|---------|--------------------|---------------------------------|
-| 5.x     | :white_check_mark: | Active LTS                      |
-| 4.x     | :x:                | End-of-life as of August 2023   |
-| 3.x     | :x:                | End-of-life as of November 2021 |
-| 2.x     | :x:                | End-of-life as of 2017          |
+| Version | Supported |
+| --- | --- |
+| Latest published preview | Yes, until `0.1.0` is released |
+| Older previews | No |
+| Unreleased source snapshots | No guaranteed support |
+
+The `0.1.0-beta.1` preview is currently being prepared and has not yet been published.
 
 ## Reporting a vulnerability
 
-To report a vulnerability please send an email with the details to [security@swagger.io](mailto:security@swagger.io).
+Please report suspected vulnerabilities privately through [GitHub Security Advisories](https://github.com/ariel1safar/swagger-ui-monaco/security/advisories/new). Do not open a public issue or include sensitive exploit details in a pull request.
 
-We'll acknowledge receipt of your report ASAP, and set expectations on how we plan to handle it.
+Include the affected package and version, impact, reproduction steps or proof of concept, and any known mitigations. Maintainers will acknowledge the report through the private advisory and coordinate disclosure and remediation there.
+
+For vulnerabilities in upstream Swagger UI, Monaco Editor, Express, or another dependency, you may also need to notify that project's security team. Please still report the impact on this fork privately so the pinned dependency or integration can be assessed.

@@ -1,0 +1,55 @@
+{
+  "name": "swagger-ui-monaco-workspace",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariel1safar/swagger-ui-monaco.git",
+    "directory": "monaco"
+  },
+  "homepage": "https://github.com/ariel1safar/swagger-ui-monaco#readme",
+  "bugs": {"url": "https://github.com/ariel1safar/swagger-ui-monaco/issues"},
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "node scripts/build.mjs",
+    "test:e2e": "playwright test",
+    "test:packages": "node --experimental-strip-types scripts/test-packages.mjs",
+    "release:verify": "node --experimental-strip-types scripts/release.ts verify",
+    "release:publish": "node --experimental-strip-types scripts/release.ts publish"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@playwright/test": "1.58.2",
+    "@types/express": "5.0.6",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/swagger-ui-express": "4.1.8",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.1",
+    "express": "5.2.1",
+    "globals": "16.5.0",
+    "jsonc-parser": "3.3.1",
+    "monaco-editor": "0.56.0",
+    "swagger-ui-dist": "5.32.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.48.1",
+    "vitest": "4.1.11",
+    "vscode-json-languageservice": "5.3.11",
+    "vscode-languageserver-textdocument": "1.0.12"
+  },
+  "overrides": {
+    "monaco-editor": {
+      "dompurify": "3.4.15"
+    }
+  }
+}

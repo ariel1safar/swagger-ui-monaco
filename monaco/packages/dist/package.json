@@ -1,0 +1,33 @@
+{
+  "name": "swagger-ui-monaco-dist",
+  "version": "0.1.0-beta.1",
+  "description": "Self-hosted Swagger UI with schema-aware Monaco editors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariel1safar/swagger-ui-monaco.git",
+    "directory": "monaco/packages/dist"
+  },
+  "homepage": "https://github.com/ariel1safar/swagger-ui-monaco/tree/main/monaco/packages/dist#readme",
+  "bugs": {"url": "https://github.com/ariel1safar/swagger-ui-monaco/issues"},
+  "keywords": ["swagger-ui", "monaco-editor", "openapi", "self-hosted"],
+  "scripts": {"prepack": "node --experimental-strip-types ../../scripts/check-package.ts"},
+  "engines": {"node": ">=22.14.0"},
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs"},
+    "./absolute-path": {
+      "import": {"types": "./dist/absolute-path.d.ts", "default": "./dist/absolute-path.js"},
+      "require": {"types": "./dist/absolute-path.d.cts", "default": "./dist/absolute-path.cjs"}
+    },
+    "./absolute-path.js": {
+      "import": {"types": "./dist/absolute-path.d.ts", "default": "./dist/absolute-path.js"},
+      "require": {"types": "./dist/absolute-path.d.cts", "default": "./dist/absolute-path.cjs"}
+    },
+    "./assets/*": "./dist/assets/*"
+  },
+  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
+  "license": "Apache-2.0",
+  "publishConfig": {"access": "public", "registry": "https://registry.npmjs.org"}
+}

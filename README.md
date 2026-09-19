@@ -1,125 +1,130 @@
-# <img src="https://raw.githubusercontent.com/swagger-api/swagger.io/wordpress/images/assets/SWU-logo-clr.png" width="300">
+# Swagger UI Monaco
 
-[![NPM version](https://badge.fury.io/js/swagger-ui.svg)](http://badge.fury.io/js/swagger-ui)
-[![Build Status](https://github.com/swagger-api/swagger-ui/actions/workflows/nodejs.yml/badge.svg)](https://github.com/swagger-api/swagger-ui/actions/workflows/nodejs.yml)
-[![security scan](https://img.shields.io/github/actions/workflow/status/swagger-api/swagger-ui/security-scan.yml?label=Security%20Scan)](https://github.com/swagger-api/swagger-ui/actions/workflows/security-scan.yml)
-[![total GitHub contributors](https://img.shields.io/github/contributors-anon/swagger-api/swagger-ui.svg)](https://github.com/swagger-api/swagger-ui/graphs/contributors)
+[![Monaco CI](https://github.com/ariel1safar/swagger-ui-monaco/actions/workflows/monaco-ci.yml/badge.svg)](https://github.com/ariel1safar/swagger-ui-monaco/actions/workflows/monaco-ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-[![monthly npm installs](https://img.shields.io/npm/dm/swagger-ui.svg?label=npm%20downloads)](https://www.npmjs.com/package/swagger-ui)
-![docker registry](https://img.shields.io/badge/docker-docker.swagger.io%2Fswaggerapi%2Fswagger--ui-blue)
-![monthly packagist installs](https://img.shields.io/packagist/dm/swagger-api/swagger-ui.svg?label=packagist%20installs)
-[![gzip size](https://img.shields.io/bundlephobia/minzip/swagger-ui.svg?label=gzip%20size)](https://bundlephobia.com/package/swagger-ui)
+Swagger UI Monaco is an independent fork of [Swagger UI](https://github.com/swagger-api/swagger-ui) that adds schema-aware Monaco editors for JSON request bodies and object parameters, plus a read-only JSON response viewer. It is not affiliated with or endorsed by SmartBear Software or the Swagger UI maintainers.
 
-## Introduction
-[Swagger UI](https://swagger.io/tools/swagger-ui/) allows anyone — be it your development team or your end consumers — to visualize and interact with the API’s resources without having any of the implementation logic in place. It’s automatically generated from your OpenAPI (formerly known as Swagger) Specification, with the visual documentation making it easy for back end implementation and client side consumption.
+The repository preserves Swagger UI's source and Git history. Active fork development lives in [`monaco/`](monaco/README.md), where the packages are built independently from pinned npm dependencies. In particular, the distribution package uses `swagger-ui-dist` 5.32.15 from npm; it is not built from the Swagger UI source at the repository root.
 
-## General
-**👉🏼 Want to score an easy open-source contribution?** Check out our [Good first issue](https://github.com/swagger-api/swagger-ui/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+first+issue%22) label.
+## Packages
 
-**🕰️ Looking for the older version of Swagger UI?** Refer to the [*2.x* branch](https://github.com/swagger-api/swagger-ui/tree/2.x).
+All three packages are currently preparing the `0.1.0-beta.1` preview. They have not been published yet. The preview will use the npm `next` tag; the synchronized stable `0.1.0` release will later use `latest`.
 
+| Package | Choose it when |
+| --- | --- |
+| [`swagger-ui-monaco`](monaco/packages/plugin/README.md) | You already initialize Swagger UI in a browser and can host the Monaco runtime assets. |
+| [`swagger-ui-monaco-dist`](monaco/packages/dist/README.md) | You want a self-hosted Swagger UI 5.32.15 distribution with the plugin and Monaco Editor 0.56.0 included. |
+| [`swagger-ui-monaco-express`](monaco/packages/express/README.md) | You use Express and want middleware compatible with the `swagger-ui-express` API. |
 
-This repository publishes three different NPM modules:
+After the preview is published, install the package you need from `next`:
 
-* [swagger-ui](https://www.npmjs.com/package/swagger-ui) is a traditional npm module intended for use in single-page applications that are capable of resolving dependencies (via Webpack, Browserify, etc.).
-* [swagger-ui-dist](https://www.npmjs.com/package/swagger-ui-dist) is a dependency-free module that includes everything you need to serve Swagger UI in a server-side project, or a single-page application that can't resolve npm module dependencies.
-* [swagger-ui-react](https://www.npmjs.com/package/swagger-ui-react) is Swagger UI packaged as a React component for use in React applications.
-
-We strongly suggest that you use `swagger-ui` instead of `swagger-ui-dist` if you're building a single-page application, since `swagger-ui-dist` is significantly larger.
-
-If you are looking for plain ol' HTML/JS/CSS, [download the latest release](https://github.com/swagger-api/swagger-ui/releases/latest) and copy the contents of the `/dist` folder to your server.
-
-
-## Compatibility
-The OpenAPI Specification has undergone 5 revisions since initial creation in 2010.  Compatibility between Swagger UI and the OpenAPI Specification is as follows:
-
-| Swagger UI Version | Release Date | OpenAPI Spec compatibility                                  | Notes                                                                 |
-|--------------------|--------------|-------------------------------------------------------------|-----------------------------------------------------------------------|
-| 5.32.0             | 2026-02-27   | 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.1.0, 3.1.1, 3.1.2, 3.2.0 | [tag v5.32.0](https://github.com/swagger-api/swagger-ui/tree/v5.32.0) |
-| 5.19.0             | 2025-02-17   | 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.1.0, 3.1.1, 3.1.2 | [tag v5.19.0](https://github.com/swagger-api/swagger-ui/tree/v5.19.0) |
-| 5.0.0              | 2023-06-12   | 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.1.0               | [tag v5.0.0](https://github.com/swagger-api/swagger-ui/tree/v5.0.0)   |
-| 4.0.0              | 2021-11-03   | 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3                      | [tag v4.0.0](https://github.com/swagger-api/swagger-ui/tree/v4.0.0)   |
-| 3.18.3             | 2018-08-03   | 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3                      | [tag v3.18.3](https://github.com/swagger-api/swagger-ui/tree/v3.18.3) |
-| 3.0.21             | 2017-07-26   | 2.0                                                  | [tag v3.0.21](https://github.com/swagger-api/swagger-ui/tree/v3.0.21) |
-| 2.2.10             | 2017-01-04   | 1.1, 1.2, 2.0                                        | [tag v2.2.10](https://github.com/swagger-api/swagger-ui/tree/v2.2.10) |
-| 2.1.5              | 2016-07-20   | 1.1, 1.2, 2.0                                        | [tag v2.1.5](https://github.com/swagger-api/swagger-ui/tree/v2.1.5)   |
-| 2.0.24             | 2014-09-12   | 1.1, 1.2                                             | [tag v2.0.24](https://github.com/swagger-api/swagger-ui/tree/v2.0.24) |
-| 1.0.13             | 2013-03-08   | 1.1, 1.2                                             | [tag v1.0.13](https://github.com/swagger-api/swagger-ui/tree/v1.0.13) |
-| 1.0.1              | 2011-10-11   | 1.0, 1.1                                             | [tag v1.0.1](https://github.com/swagger-api/swagger-ui/tree/v1.0.1)   |
-
-## Anonymized analytics
-
-SwaggerUI uses [Scarf](https://scarf.sh/) to collect [anonymized installation analytics](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-what-information-does-scarf-js-send-about-me). These analytics help support the maintainers of this library and ONLY run during installation. To [opt out](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-how-can-i-opt-out-of-analytics), you can set the `scarfSettings.enabled` field to `false` in your project's `package.json`:
-
+```sh
+npm install swagger-ui-monaco@next
+npm install swagger-ui-monaco-dist@next
+npm install swagger-ui-monaco-express@next express
 ```
-// package.json
+
+### Existing wrappers, including NestJS
+
+If your framework serves Swagger UI through `swagger-ui-dist`, you can replace that dependency with `swagger-ui-monaco-dist` while keeping your framework integration. For NestJS, keep your existing `@nestjs/swagger` imports and `SwaggerModule.setup(...)` call.
+
+After `0.1.0-beta.1` is published, choose the configuration for your package manager and add it to your application's root `package.json`:
+
+**npm overrides**
+
+```json
 {
-  // ...
-  "scarfSettings": {
-    "enabled": false
+  "overrides": {
+    "@nestjs/swagger": {
+      "swagger-ui-dist": "npm:swagger-ui-monaco-dist@0.1.0-beta.1"
+    }
   }
-  // ...
 }
 ```
 
-Alternatively, you can set the environment variable `SCARF_ANALYTICS` to `false` as part of the environment that installs your npm packages, e.g., `SCARF_ANALYTICS=false npm install`.
+**Yarn resolutions**
 
-## Documentation
-
-#### Usage
-- [Installation](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md)
-- [Configuration](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/configuration.md)
-- [CORS](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/cors.md)
-- [OAuth2](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/oauth2.md)
-- [Deep Linking](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/deep-linking.md)
-- [Limitations](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/limitations.md)
-- [Version detection](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/version-detection.md)
-
-#### Customization
-- [Overview](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/customization/overview.md)
-- [Plugin API](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/customization/plugin-api.md)
-- [Custom layout](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/customization/custom-layout.md)
-
-#### Development
-- [Setting up](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/development/setting-up.md)
-- [Scripts](https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/development/scripts.md)
-
-#### Contributing
-- [Contributing](https://github.com/swagger-api/.github/blob/HEAD/CONTRIBUTING.md)
-
-##### Integration Tests
-
-End-to-end tests use [Cypress](https://www.cypress.io/). Run the full suite locally with `npm run cy:ci`, which starts the required servers, runs Cypress headless, and shuts the servers down afterwards - be sure you aren't running a dev server on the same ports when testing!
-
-To debug or run individual specs interactively, use `npm run cy:dev` to open the Cypress runner.
-
-To run a single spec headless, start the servers in one terminal and run that spec in another:
-
-```sh
-npm run cy:start
-# in a second terminal:
-npm run cy:run -- --spec "test/e2e-cypress/e2e/features/deep-linking.cy.js"
+```json
+{
+  "resolutions": {
+    "@nestjs/swagger/swagger-ui-dist": "npm:swagger-ui-monaco-dist@0.1.0-beta.1"
+  }
+}
 ```
 
-### Browser support
-Swagger UI works in the latest versions of Chrome, Safari, Firefox, and Edge.
+Run `npm install` or `yarn install`, commit the updated lockfile, then restart your app and check the docs page. These examples assume `swagger-ui-dist` is a transitive dependency; Yarn should use a `node_modules` installation. The override selects the bundled Swagger UI 5.32.15, so verify your wrapper against that version.
 
-### Known Issues
+See the [wrapper integration guide](monaco/docs/wrappers.md) for pnpm, asset verification, compatibility limits, and NestJS's `customSwaggerUiPath` alternative.
 
-To help with the migration, here are the currently known issues with 3.X. This list will update regularly, and will not include features that were not implemented in previous versions.
+### Browser plugin
 
-- Only part of the parameters previously supported are available.
-- The JSON Form Editor is not implemented.
-- Support for `collectionFormat` is partial.
-- l10n (translations) is not implemented.
-- Relative path support for external files is not implemented.
+```js
+import { createMonacoPlugin } from 'swagger-ui-monaco';
 
-## Security contact
+SwaggerUIBundle({
+  url: '/openapi.json',
+  plugins: [createMonacoPlugin({ assetBaseUrl: '/docs/monaco/' })],
+});
+```
 
-Please disclose any security-related issues or vulnerabilities by emailing [security@swagger.io](mailto:security@swagger.io), instead of using the public issue tracker.
+Copy the plugin's complete `dist/assets/` directory to `/docs/monaco/` or another browser-accessible path.
 
-## License
+### Self-hosted distribution
 
-SwaggerUI is licensed under [Apache 2.0 license](https://github.com/swagger-api/swagger-ui/blob/main/LICENSE).
-SwaggerUI comes with an explicit [NOTICE](https://github.com/swagger-api/swagger-ui/blob/main/NOTICE) file
-containing additional legal notices and information.
+```js
+import express from 'express';
+import { getAbsoluteFSPath } from 'swagger-ui-monaco-dist';
+
+const app = express();
+app.use('/docs', express.static(getAbsoluteFSPath()));
+```
+
+### Express integration
+
+```js
+import express from 'express';
+import swaggerUi from 'swagger-ui-monaco-express';
+
+const app = express();
+const document = {
+  openapi: '3.1.0',
+  info: { title: 'Example', version: '1.0.0' },
+  paths: {},
+};
+
+app.use(
+  '/api-docs',
+  swaggerUi.serveFiles(document),
+  swaggerUi.setup(document),
+);
+```
+
+## Compatibility
+
+The Monaco surfaces support OpenAPI 3.0.x and 3.1.x documents with JSON media types. Swagger/OpenAPI 2.0, YAML bodies, multipart bodies, binary bodies, and arbitrary text media types keep Swagger UI's original components. Schema assistance is advisory: remote references, anchors, dynamic references, recursive references, and some JSON Schema dialect behavior are limited.
+
+Read the full [compatibility and schema behavior guide](monaco/docs/compatibility.md) before relying on editor diagnostics.
+
+## Development
+
+Fork development runs from the standalone Monaco workspace:
+
+```sh
+cd monaco
+npm ci
+npm run build
+npm test
+npm run typecheck
+npm run lint
+```
+
+See [Contributing](CONTRIBUTING.md) for test expectations and [Releasing](monaco/docs/releasing.md) for the preview release process.
+
+## Security
+
+Report vulnerabilities privately through [GitHub Security Advisories](https://github.com/ariel1safar/swagger-ui-monaco/security/advisories/new). Do not open a public issue for a suspected vulnerability. See the [security policy](SECURITY.md) for supported versions.
+
+## Upstream and license
+
+This fork retains the upstream Swagger UI source, history, Apache License 2.0 terms, and legal notices. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Swagger and Swagger UI are trademarks of SmartBear Software Inc.; their use here describes compatibility and origin.

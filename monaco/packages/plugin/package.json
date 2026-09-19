@@ -1,0 +1,26 @@
+{
+  "name": "swagger-ui-monaco",
+  "version": "0.1.0-beta.1",
+  "description": "Schema-aware Monaco request editors and response viewers for Swagger UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariel1safar/swagger-ui-monaco.git",
+    "directory": "monaco/packages/plugin"
+  },
+  "homepage": "https://github.com/ariel1safar/swagger-ui-monaco/tree/main/monaco/packages/plugin#readme",
+  "bugs": {"url": "https://github.com/ariel1safar/swagger-ui-monaco/issues"},
+  "keywords": ["swagger-ui", "monaco-editor", "openapi", "json", "editor"],
+  "scripts": {"prepack": "node --experimental-strip-types ../../scripts/check-package.ts"},
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs"},
+    "./assets/*": "./dist/assets/*"
+  },
+  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
+  "sideEffects": ["**/*.css"],
+  "license": "Apache-2.0",
+  "publishConfig": {"access": "public", "registry": "https://registry.npmjs.org"}
+}

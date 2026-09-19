@@ -1,55 +1,32 @@
-<!--- Provide a general summary of your changes in the Title above -->
+## Problem and result
 
-### Description
-<!--- Describe your changes in detail -->
+<!-- Describe the concrete problem and the resulting behavior. Link the issue with "Fixes #123" when applicable. -->
 
+## Scope
 
+- Affected package(s): <!-- swagger-ui-monaco, swagger-ui-monaco-dist, swagger-ui-monaco-express, repository tooling/docs -->
+- Package version tested:
+- Browser/runtime tested:
+- OpenAPI version tested: <!-- 3.0.x, 3.1.x, or not applicable -->
+- Breaking change: <!-- No, or describe the affected public interface/data format/workflow -->
 
-### Motivation and Context
-<!--- Why is this change required? What problem does it solve? -->
-<!--- If it fixes an open issue, please link to the issue here. -->
-<!--- Use the magic "Fixes #1234" format, so the issues are -->
-<!--- automatically closed when this PR is merged. -->
+## Minimal reproduction
 
+<!-- For behavior changes and fixes, link or include the smallest reproduction that showed the previous behavior. -->
 
+## Verification
 
-### How Has This Been Tested?
-<!--- Please describe in detail how you manually tested your changes. -->
-<!--- Include details of your testing environment, and the tests you ran to -->
-<!--- see how your change affects other areas of the code, etc. -->
+<!-- List the exact commands and manual checks run. Explain any expected check that was not run. -->
 
-
-
-### Screenshots (if appropriate):
-
-
+```sh
+# exact test commands
+```
 
 ## Checklist
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 
-### My PR contains... 
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] No code changes (`src/` is unmodified: changes to documentation, CI, metadata, etc.)
-- [ ] Dependency changes (any modification to dependencies in `package.json`)
-- [ ] Bug fixes (non-breaking change which fixes an issue)
-- [ ] Improvements (misc. changes to existing features)
-- [ ] Features (non-breaking change which adds functionality)
-
-### My changes...
-- [ ] are breaking changes to a public API (config options, System API, major UI change, etc).
-- [ ] are breaking changes to a private API (Redux, component props, utility functions, etc.).
-- [ ] are breaking changes to a developer API (npm script behavior changes, new dev system dependencies, etc).
-- [ ] are not breaking changes.
-
-### Documentation
-- [ ] My changes do not require a change to the project documentation.
-- [ ] My changes require a change to the project documentation.
-- [ ] If yes to above: I have updated the documentation accordingly.
-
-### Automated tests
-- [ ] My changes can not or do not need to be tested.
-- [ ] My changes can and should be tested by unit and/or integration tests.
-- [ ] If yes to above: I have added tests to cover my changes.
-- [ ] If yes to above: I have taken care to cover edge cases in my tests.
-- [ ] All new and existing tests passed.
+- [ ] I targeted the fork's `main` branch and kept the patch focused.
+- [ ] I added a deterministic regression test for changed behavior, or explained why one is not applicable.
+- [ ] I updated relevant documentation and compatibility notes.
+- [ ] I did not edit generated files or change a lockfile without a dependency change.
+- [ ] I did not add secrets, credentials, tokens, or private API data.
+- [ ] I identified public API, package format, release workflow, or breaking changes above.

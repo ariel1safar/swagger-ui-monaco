@@ -1,46 +1,36 @@
 ---
-name: Support
-about: Ask a question or request help with your implementation.
-
+name: Support question
+about: Ask for help using Swagger UI Monaco
 ---
 
-<!--
-  We can only offer support for Swagger-UI itself.
+Swagger UI Monaco is an independent fork and this tracker is not an official Swagger UI support channel. Questions about upstream Swagger UI behavior may belong in the [upstream repository](https://github.com/swagger-api/swagger-ui).
 
-  If you're having a problem with a library that uses Swagger-UI
-  (for example, Springfox or swagger-node), please open an issue
-  in that project's repository instead.
- -->
+## Environment
 
-### Q&A (please complete the following information)
- - OS: [e.g. macOS]
- - Browser: [e.g. chrome, safari]
- - Version: [e.g. 22]
- - Method of installation: [e.g. npm, dist assets]
- - Swagger-UI version: [e.g. 3.10.0]
- - Swagger/OpenAPI version: [e.g. Swagger 2.0, OpenAPI 3.0]
+- Package: <!-- swagger-ui-monaco, swagger-ui-monaco-dist, or swagger-ui-monaco-express -->
+- Package version:
+- Installation method:
+- Browser and version: <!-- or "not applicable" -->
+- Node.js and Express versions: <!-- or "not applicable" -->
+- Operating system:
+- OpenAPI version: <!-- 3.0.x or 3.1.x -->
 
-### Content & configuration
-<!-- Provide us with a way to see what you're seeing, so that we can help. -->
+## Minimal reproduction or configuration
 
-Swagger/OpenAPI definition:
+<!-- Provide the smallest OpenAPI document and setup needed to understand the question. Remove credentials, tokens, and private API data. -->
+
 ```yaml
-# your YAML here
+# Minimal OpenAPI document
 ```
 
-Swagger-UI configuration options:
 ```js
-SwaggerUI({
-  // your config options here
-})
+// Minimal Swagger UI or Express setup
 ```
 
-```
-?yourQueryStringConfig
-```
+## Question
 
-### Screenshots
-<!-- If applicable, add screenshots to help give context to your problem. -->
+<!-- What are you trying to accomplish, what happened, and what result did you expect? -->
 
-### How can we help?
-<!-- Your question or problem goes here! -->
+## Tests and checks tried
+
+<!-- List documentation, commands, browser/runtime checks, and workarounds already tried. -->

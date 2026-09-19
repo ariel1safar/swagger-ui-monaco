@@ -1,0 +1,99 @@
+name: Monaco release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish, without a v prefix
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: monaco-npm-release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'ariel1safar/swagger-ui-monaco'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: monaco
+    steps:
+      - name: Validate version input
+        working-directory: ${{ github.workspace }}
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: >-
+          node --input-type=module --eval
+          "if (!/^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*))*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$/.test(process.env.RELEASE_VERSION ?? '')) process.exit(1)"
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: refs/tags/monaco-v${{ inputs.version }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify dispatch identity, release metadata, and Git refs
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: npm run release:verify -- "$RELEASE_VERSION"
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx playwright install --with-deps chromium
+      - name: Test installed packages and create release artifacts
+        env:
+          PACKAGE_OUTPUT_DIR: .work/release/${{ inputs.version }}
+        run: npm run test:packages
+      - run: npm pack --workspaces --dry-run
+      - name: Upload tested release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: monaco-release-${{ inputs.version }}
+          path: monaco/.work/release/${{ inputs.version }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    if: github.repository == 'ariel1safar/swagger-ui-monaco'
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: monaco
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: refs/tags/monaco-v${{ inputs.version }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Verify dispatch identity, release metadata, and Git refs again
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: npm run release:verify -- "$RELEASE_VERSION"
+      - name: Download tested release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: monaco-release-${{ inputs.version }}
+          path: monaco/.work/release/${{ inputs.version }}
+      - name: Publish tested tarballs with npm trusted publishing
+        env:
+          RELEASE_ARTIFACT_DIRECTORY: .work/release/${{ inputs.version }}
+        run: npm run release:publish -- "$RELEASE_ARTIFACT_DIRECTORY"

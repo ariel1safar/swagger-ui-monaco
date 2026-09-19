@@ -1,0 +1,10 @@
+.swagger-ui .swagger-monaco { border: 1px solid #b7bec6; border-radius: 4px; margin: 8px 0; min-width: 0; }
+.swagger-ui .swagger-monaco-toolbar { display: flex; gap: 8px; flex-wrap: wrap; padding: 6px; background: #f3f5f7; }
+.swagger-ui .swagger-monaco-toolbar button { padding: 4px 10px; border: 1px solid #89939e; border-radius: 3px; background: white; color: #243244; cursor: pointer; font: inherit; font-size: 12px; }
+.swagger-ui .swagger-monaco-toolbar button:disabled { opacity: .5; cursor: default; }
+.swagger-ui .swagger-monaco-canvas { width: 100%; overflow: hidden; }
+.swagger-ui .swagger-monaco-status { font-size: 12px; padding: 4px 8px; color: #5e4800; white-space: pre-wrap; }
+.swagger-ui .swagger-monaco-status:empty { display: none; }
+.swagger-ui .swagger-monaco-fallback { width: 100%; min-height: 180px; font: 13px monospace; }
+.swagger-ui .swagger-monaco .monaco-editor textarea { min-height: 0; padding: 0; border: 0; box-shadow: none; resize: none; }
+.swagger-ui .swagger-monaco .monaco-editor .inputarea { background: transparent; }

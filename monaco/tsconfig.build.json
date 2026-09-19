@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "declaration": true, "emitDeclarationOnly": true, "rootDir": "packages", "outDir": ".work/types" },
+  "include": ["packages/*/src/**/*.ts"],
+  "exclude": ["packages/plugin/src/runtime.ts"]
+}

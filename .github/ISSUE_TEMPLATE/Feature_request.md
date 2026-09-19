@@ -1,42 +1,32 @@
 ---
 name: Feature request
-about: Suggest a new feature or enhancement for this project
-
+about: Propose a focused improvement to Swagger UI Monaco
 ---
 
- ### Content & configuration
+## Problem
 
-Swagger/OpenAPI definition:
- ```yaml
- # your YAML here
- ```
+<!-- Describe the concrete user problem and why current behavior does not solve it. -->
 
- Swagger-UI configuration options:
- ```js
- SwaggerUI({
-   // your config options here
- })
- ```
+## Environment and scope
 
- ```
- ?yourQueryStringConfig
- ```
+- Package: <!-- swagger-ui-monaco, swagger-ui-monaco-dist, swagger-ui-monaco-express, or all -->
+- Current package version:
+- Browser and version: <!-- if relevant -->
+- Node.js and Express versions: <!-- if relevant -->
+- OpenAPI version: <!-- 3.0.x, 3.1.x, or not applicable -->
 
+## Minimal example
 
-### Is your feature request related to a problem?
-<!--
-  Please provide a clear and concise description of what the problem is.
-  "I'm always frustrated when..."
-  -->
+<!-- Provide the smallest OpenAPI document or code example that demonstrates the use case. Remove credentials, tokens, and private API data. -->
 
-### Describe the solution you'd like
-<!-- A clear and concise description of what you want to happen. -->
+## Proposed behavior
 
-### Describe alternatives you've considered
-<!--
-  A clear and concise description of any alternative solutions or features
-  you've considered.
--->
+<!-- Describe the observable result and any public API or option you expect. -->
 
-### Additional context
-<!-- Add any other context or screenshots about the feature request here. -->
+## Alternatives considered
+
+<!-- Describe workarounds or other approaches you tried. -->
+
+## Tests and acceptance criteria
+
+<!-- How should maintainers verify that the feature works? Include relevant browsers, runtimes, and edge cases. -->

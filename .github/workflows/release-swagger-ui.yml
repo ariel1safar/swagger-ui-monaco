@@ -6,6 +6,7 @@ on:
 
 jobs:
   release:
+    if: github.repository == 'swagger-api/swagger-ui'
     name: Release swagger-ui npm package
     runs-on: ubuntu-latest
     permissions:
